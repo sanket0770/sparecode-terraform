@@ -17,7 +17,7 @@ provider "aws" {
 
 
 resource "aws_s3_bucket" "b" {
- bucket = "parallel-research-s3-bucket"
+ bucket = "parallel-research-s3-bucket-0001000"
 }
 
 resource "aws_s3_bucket_public_access_block" "b" {
@@ -48,50 +48,12 @@ resource "aws_s3_bucket_policy" "b" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::parallel-research-s3-bucket/*"
+      "Resource": "arn:aws:s3:::parallel-research-s3-bucket-0001000/*"
   }
 ]
 }
 POLICY
 depends_on = [ aws_s3_bucket_public_access_block.b ]
-}
-
-resource "aws_elastic_beanstalk_application" "my_app" {
-  name = "research-ElasticBeanstalkApp"
-}
-
-resource "aws_elastic_beanstalk_application_version" "default" {
-  name        = "tf-test-version-label"
-  application = aws_elastic_beanstalk_application.my_app.name
-  description = "application version created by terraform"
-  bucket      = "recipebook-app-bucket1"
-  key         = "Parallel.zip"
-}
-
-resource "aws_elastic_beanstalk_environment" "my_environment" {
-  name        = "research-Environment1"
-  application = aws_elastic_beanstalk_application.my_app.name
-  solution_stack_name = "64bit Amazon Linux 2023 v4.2.0 running Python 3.11"
-  version_label = aws_elastic_beanstalk_application_version.default.name
-
-  setting {
-    namespace = "aws:elasticbeanstalk:environment"
-    name      = "EnvironmentType"
-    value     = "SingleInstance"
-  }
-
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "PYTHONPATH"
-    value     = "/opt/python/current/app:/opt/python/run/venv/lib/python3.8/site-packages"
-  }
-  
-  setting {
-      namespace = "aws:autoscaling:launchconfiguration"
-      name      = "IamInstanceProfile"
-      value     = "aws-elasticbeanstalk-ec2-role"
-    }
-
 }
 
 resource "aws_security_group" "mysql_sg" {
