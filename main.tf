@@ -69,7 +69,7 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 }
 
 resource "aws_elastic_beanstalk_environment" "my_environment" {
-  name        = "parallel-research-Environment"
+  name        = "parallel-research-Environment1"
   application = aws_elastic_beanstalk_application.my_app.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.2.0 running Python 3.11"
   version_label = aws_elastic_beanstalk_application_version.default.name
