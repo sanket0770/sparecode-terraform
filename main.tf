@@ -71,7 +71,7 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 resource "aws_elastic_beanstalk_environment" "my_environment" {
   name        = "parallel-research-Environment"
   application = aws_elastic_beanstalk_application.my_app.name
-  solution_stack_name = "64bit Amazon Linux 2023 v4.0.6 running Python 3.11"
+  solution_stack_name = "64bit Amazon Linux 2023 v4.2.0 running Python 3.11"
   version_label = aws_elastic_beanstalk_application_version.default.name
 
   setting {
@@ -124,7 +124,7 @@ resource "aws_db_instance" "default" {
   db_name                       = "mydb1"
   engine                        = "mysql"
   engine_version                = "5.7"
-  identifier                    = "parallel-research-rds"   
+  identifier                    = "parallel-research-rds2"   
   instance_class                = "db.t3.micro"
   network_type                  = "IPV4"
   port                          = "3306" 
