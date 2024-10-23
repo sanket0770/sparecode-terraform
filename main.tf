@@ -64,7 +64,7 @@ resource "aws_elastic_beanstalk_application_version" "default" {
   name        = "tf-test-version-label"
   application = aws_elastic_beanstalk_application.my_app.name
   description = "application version created by terraform"
-  bucket      = "recipebook-app-bucket"
+  bucket      = "recipebook-app-bucket1"
   key         = "Parallel.zip"
 }
 
