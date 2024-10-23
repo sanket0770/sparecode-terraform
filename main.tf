@@ -57,7 +57,7 @@ depends_on = [ aws_s3_bucket_public_access_block.b ]
 }
 
 resource "aws_elastic_beanstalk_application" "my_app" {
-  name = "parallel-research-ElasticBeanstalkApp"
+  name = "research-ElasticBeanstalkApp"
 }
 
 resource "aws_elastic_beanstalk_application_version" "default" {
@@ -69,16 +69,10 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 }
 
 resource "aws_elastic_beanstalk_environment" "my_environment" {
-  name        = "parallel-research-Environment1"
+  name        = "research-Environment1"
   application = aws_elastic_beanstalk_application.my_app.name
   solution_stack_name = "64bit Amazon Linux 2023 v4.2.0 running Python 3.11"
   version_label = aws_elastic_beanstalk_application_version.default.name
-
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "InstanceType"
-    value     = "t2.micro"
-  }
 
   setting {
     namespace = "aws:elasticbeanstalk:environment"
@@ -101,7 +95,7 @@ resource "aws_elastic_beanstalk_environment" "my_environment" {
 }
 
 resource "aws_security_group" "mysql_sg" {
-  name        = "parallel-mysql-sg1"
+  name        = "research-mysql-sg1"
   description = "Security group for MySQL on port 3306"
 
   ingress {
@@ -124,7 +118,7 @@ resource "aws_db_instance" "default" {
   db_name                       = "mydb1"
   engine                        = "mysql"
   engine_version                = "5.7"
-  identifier                    = "parallel-research-rds2"   
+  identifier                    = "research-rds2"   
   instance_class                = "db.t3.micro"
   network_type                  = "IPV4"
   port                          = "3306" 
